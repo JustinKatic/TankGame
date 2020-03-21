@@ -23,21 +23,21 @@ namespace MathClasses
             z = _z;
         }
 
-        
+
         // vector 3 addition
-        public static Vector3 operator + (Vector3 lhs, Vector3 rhs)
+        public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
         }
 
         //vector 3 subtraction
-        public static Vector3 operator - (Vector3 lhs, Vector3 rhs)
+        public static Vector3 operator -(Vector3 lhs, Vector3 rhs)
         {
             return new Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
         }
 
         //vector 3 postScale
-        public static Vector3 operator * (Vector3 lhs, float rhs)
+        public static Vector3 operator *(Vector3 lhs, float rhs)
         {
             return new Vector3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
         }
@@ -48,6 +48,19 @@ namespace MathClasses
             return new Vector3(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
         }
 
+        //Vector 3 Dot
+        public float Dot(Vector3 rhs)
+        {
+            return x * rhs.x + y * rhs.y + z * rhs.z;
+        }
+
+        public Vector3 Cross(Vector3 rhs)
+        {
+            return new Vector3
+                (y * rhs.z - z * rhs.y,
+                z * rhs.x - x * rhs.z,
+                x * rhs.y - rhs.x);
+        }
 
     }
 }

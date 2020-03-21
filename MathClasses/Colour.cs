@@ -14,6 +14,5 @@ namespace MathClasses
         {
             colour = 0;
         }
-
     }
 }

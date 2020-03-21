@@ -28,11 +28,11 @@ namespace MathClasses
         // vector 4 addition
         public static Vector4 operator +(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);               
+            return new Vector4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
         }
 
         // vector 4 subtraction
-        public static Vector4 operator - (Vector4 lhs, Vector4 rhs)
+        public static Vector4 operator -(Vector4 lhs, Vector4 rhs)
         {
             return new Vector4(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
         }
@@ -47,6 +47,22 @@ namespace MathClasses
         public static Vector4 operator *(float lhs, Vector4 rhs)
         {
             return new Vector4(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+        }
+
+        //Vector 4 Dot
+        public float Dot(Vector4 rhs)
+        {
+            return x * rhs.x + y * rhs.y + z * rhs.z + w * rhs.w;
+        }
+
+        public Vector4 Cross(Vector4 rhs)
+        {
+            return new Vector4
+                (y * rhs.z - z * rhs.y,
+                z * rhs.x - x * rhs.z,
+                x * rhs.y - rhs.x,
+                 0
+                );
         }
     }
 }
