@@ -64,5 +64,23 @@ namespace MathClasses
                  0
                 );
         }
+
+        //vector 4 magnitude
+        public float Magnitude()
+        {
+            return (float)Math.Sqrt(x * x + y * y + z * z + w * w);
+        }
+
+
+        //vector 4 normalize - Vector3(0, 0, 5) is a direction of 5 units along the z axis, so it has a length of 5. If you normalize that, it's Vector3 becomes (0, 0, 1). You would do this when you only want the direction and don't care about the length.
+        public void Normalize()
+        {
+            float m = Magnitude();
+            this.x /= m;
+            this.y /= m;
+            this.z /= m;
+            this.w /= m;
+        }
     }
+
 }
