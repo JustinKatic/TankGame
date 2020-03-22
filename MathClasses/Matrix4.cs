@@ -61,6 +61,13 @@ namespace MathClasses
             lhs.m13 * rhs.m3 + lhs.m14 * rhs.m7 + lhs.m15 * rhs.m11 + lhs.m16 * rhs.m15,
             lhs.m13 * rhs.m4 + lhs.m14 * rhs.m8 + lhs.m15 * rhs.m12 + lhs.m16 * rhs.m16);
         }
+        public void SetScaled(float x, float y, float z, float w)
+        {
+            m1 = x; m2 = 0; m3 = 0; m4 = 0;
+            m5 = 0; m6 = y; m7 = 0; m8 = 0;
+            m9 = 0; m10 = 0; m11 = z; m12 = 0;
+            m13 = 0; m14 = 0; m15 = 0; m16 = w;
+        }
     }
 }
 

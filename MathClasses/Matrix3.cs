@@ -46,5 +46,34 @@ namespace MathClasses
             lhs.m7 * rhs.m2 + lhs.m8 * rhs.m5 + lhs.m9 * rhs.m8,
             lhs.m7 * rhs.m3 + lhs.m8 * rhs.m6 + lhs.m9 * rhs.m9);
         }
+        public void SetScaled(float x, float y, float z)
+        {
+            m1 = x; m2 = 0; m3 = 0;
+            m4 = 0; m5 = y; m6 = 0;
+            m7 = 0; m8 = 0; m9 = z;
+        }
+
+        public void Set(Matrix3 m)
+        {
+            m1 = 1; m2 = 0; m3 = 0;
+            m4 = 0; m5 = 1; m6 = 0;
+            m7 = 0; m8 = 0; m9 = 1;
+        }
+
+        public void Scale(float x, float y, float z)
+        {
+            Matrix3 m = new Matrix3();
+            m.SetScaled(x, y, z);
+            Set(this * m);
+        }
+
+        //public void SetRotateX(double radians)
+        //{
+        //    Set
+        //       (1, 0, 0,
+        //    0, (float)Math.Cos(radians), (float)Math.Sin(radians),
+        //    0, (float)-Math.Sin(radians), (float)Math.Cos(radians));
+        //}
+
     }
 }

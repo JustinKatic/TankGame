@@ -60,7 +60,7 @@ namespace MathClasses
             return new Vector4
                 (y * rhs.z - z * rhs.y,
                 z * rhs.x - x * rhs.z,
-                x * rhs.y - rhs.x,
+                x * rhs.y - y * rhs.x,
                  0
                 );
         }

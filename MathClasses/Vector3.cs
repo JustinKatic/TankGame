@@ -59,7 +59,7 @@ namespace MathClasses
             return new Vector3
                 (y * rhs.z - z * rhs.y,
                 z * rhs.x - x * rhs.z,
-                x * rhs.y - rhs.x);
+                x * rhs.y - y*  rhs.x);
         }
 
         //vector 3 Magnitude
