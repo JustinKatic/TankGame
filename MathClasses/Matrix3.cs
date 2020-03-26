@@ -17,7 +17,6 @@ namespace MathClasses
             m7 = 0; m8 = 0; m9 = 1;
         }
 
-
         public Matrix3(float _m1, float _m2, float _m3, float _m4, float _m5, float _m6, float _m7, float _m8, float _m9)
         {
             m1 = _m1; m2 = _m2; m3 = _m3;
@@ -55,36 +54,25 @@ namespace MathClasses
         public static Matrix3 operator *(Matrix3 lhs, Matrix3 rhs)
         {
             return new Matrix3
-           (rhs.m1 * lhs.m1 + rhs.m2 * lhs.m4 + rhs.m3 * lhs.m7,
-            rhs.m1 * lhs.m2 + rhs.m2 * lhs.m5 + rhs.m3 * lhs.m8,
-            rhs.m1 * lhs.m3 + rhs.m2 * lhs.m6 + rhs.m3 * lhs.m9,
+           (lhs.m1 * rhs.m1 + lhs.m4 * rhs.m2 + lhs.m7 * rhs.m3,
+            lhs.m2 * rhs.m1 + lhs.m5 * rhs.m2 + lhs.m8 * rhs.m3,
+            lhs.m3 * rhs.m1 + lhs.m6 * rhs.m2 + lhs.m9 * rhs.m3,
 
-            rhs.m4* lhs.m1 + rhs.m5 * lhs.m4 + rhs.m6 * lhs.m7,
-            rhs.m4* lhs.m2 + rhs.m5 * lhs.m5 + rhs.m6 * lhs.m8,
-            rhs.m4* lhs.m3 + rhs.m5 * lhs.m6 + rhs.m6 * lhs.m9,
+            lhs.m1* rhs.m4 + lhs.m4 * rhs.m5 + lhs.m7 * rhs.m6,
+            lhs.m2* rhs.m4 + lhs.m5 * rhs.m5 + lhs.m8 * rhs.m6,
+            lhs.m3* rhs.m4 + lhs.m6 * rhs.m5 + lhs.m9 * rhs.m6,
 
-            rhs.m7* lhs.m1 + rhs.m8 * lhs.m4 + rhs.m9 * lhs.m7,
-            rhs.m7* lhs.m2 + rhs.m8 * lhs.m5 + rhs.m9 * lhs.m8,
-            rhs.m7* lhs.m3 + rhs.m8 * lhs.m6 + rhs.m9 * lhs.m9);
+            lhs.m1* rhs.m7 + lhs.m4 * rhs.m8 + lhs.m7 * rhs.m9,
+            lhs.m2* rhs.m7 + lhs.m5 * rhs.m8 + lhs.m8 * rhs.m9,
+            lhs.m3* rhs.m7 + lhs.m6 * rhs.m8 + lhs.m9 * rhs.m9);
         }
 
         public static Vector3 operator *(Matrix3 lhs, Vector3 rhs)
         {//row major
-            return new Vector3((rhs.x * lhs.m1) + (rhs.y * lhs.m4) + (rhs.z * lhs.m7),
+            return new Vector3
+            ((rhs.x * lhs.m1) + (rhs.y * lhs.m4) + (rhs.z * lhs.m7),
             (rhs.x * lhs.m2) + (rhs.y * lhs.m5) + (rhs.z * lhs.m8),
             (rhs.x * lhs.m3) + (rhs.y * lhs.m6) + (rhs.z * lhs.m9));
-
-            //(rhs.x * lhs.m1) + (rhs.y * lhs.m4) + (rhs.z * lhs.m7),
-            //(rhs.x * lhs.m2) + (rhs.y * lhs.m5) + (rhs.z * lhs.m8),
-            //(rhs.x * lhs.m3) + (rhs.y * lhs.m6) + (rhs.z * lhs.m9),
-
-            //(rhs.x * lhs.m1) + (rhs.y * lhs.m4) + (rhs.z * lhs.m7),
-            //(rhs.x * lhs.m2) + (rhs.y * lhs.m5) + (rhs.z * lhs.m8),
-            //(rhs.x * lhs.m3) + (rhs.y * lhs.m6) + (rhs.z * lhs.m9));
         }
-
     }
 }
-
-
-
