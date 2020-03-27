@@ -23,4 +23,8 @@
     <ProjectReference Include="..\MathClasses\MathClasses.csproj" />
   </ItemGroup>
 
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="copy $(SolutionDir)Raylib\dll\raylib.dll $(TargetDir)&#xD;&#xA;" />
+  </Target>
+
 </Project>

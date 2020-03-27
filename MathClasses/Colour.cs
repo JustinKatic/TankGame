@@ -31,7 +31,6 @@ namespace MathClasses
         public byte GetRed()
         {
             return (byte)((colour & 0xff000000) >> 24);  //variable only contain red component value of colour
-            //UInt32 value = colour & 0xff000000;
         }
         public byte GetGreen()
         {
