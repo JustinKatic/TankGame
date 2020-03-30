@@ -21,11 +21,12 @@ namespace TankGame
 
         SceneObject tankObject = new SceneObject();
         SceneObject turretObject = new SceneObject();
-        SceneObject bulletObject = new SceneObject();
 
         SpriteObject tankSprite = new SpriteObject();
         SpriteObject turretSprite = new SpriteObject();
-        SpriteObject bulletSprite = new SpriteObject();
+
+        private List<SpriteObject> Bullets = new List<SpriteObject>();
+
 
 
         public void Init()
@@ -40,12 +41,10 @@ namespace TankGame
             tankSprite.SetPosition(-tankSprite.Width / 2.0f, tankSprite.Height / 2.0f);
 
             turretSprite.Load("../../Images/barrelBlue.png");
-            tankSprite.SetRotate(-90 * (float)(Math.PI / 180.0f));
+            turretSprite.SetRotate(-90 * (float)(Math.PI / 180.0f));
             // sets an offset for the base, so it rotates around the centre
-            tankSprite.SetPosition(-tankSprite.Width / 2.0f, tankSprite.Height / 2.0f);
+            turretSprite.SetPosition(0, turretSprite.Width / 2.0f);
 
-
-            bulletSprite.Load("../../Images/bulletBlue.png");
 
 
 
@@ -54,12 +53,14 @@ namespace TankGame
             turretObject.AddChild(turretSprite);
             tankObject.AddChild(tankSprite);
             tankObject.AddChild(turretObject);
-         
+
+
 
             // having an empty object for the tank parent means we can set the
             // position/rotation of the tank without
             // affecting the offset of the base sprite
             tankObject.SetPosition(rl.Raylib.GetScreenWidth() / 2.0f, rl.Raylib.GetScreenHeight() / 2.0f);
+
         }
 
         public void Update()
@@ -112,6 +113,45 @@ namespace TankGame
 
             tankObject.Update(deltaTime);
 
+            if (rl.Raylib.IsKeyPressed(rl.KeyboardKey.KEY_SPACE))
+            {
+                {
+                    SpriteObject bullet = new SpriteObject();
+                    Bullets.Add(bullet);
+                    bullet.Load("../../Images/bulletBlue.png");
+
+                    bullet.localTransform = tankObject.GetChild(1).GlobalTransform.GetTransposed();
+
+
+                    Vector3 length = new Vector3(
+                        bullet.LocalTransform.m1,
+                        bullet.LocalTransform.m2, 1) * ((tankSprite.Width / 2f) - 5f);
+
+                    Vector3 height = new Vector3(
+                        bullet.LocalTransform.m4,
+                        bullet.LocalTransform.m5, 1) * -((tankSprite.Height / 6f) - 3f);
+
+                    bullet.Translate(length.x, length.y);
+                    bullet.Translate(height.x, height.y);
+
+                }
+            }
+
+            foreach (SpriteObject bullet in Bullets)
+            {
+                if (bullet != null)
+                {
+                    Vector3 facing = new Vector3(
+                        bullet.LocalTransform.m1,
+                        bullet.LocalTransform.m2, 1) * deltaTime * 700;
+                    bullet.Translate(facing.x, facing.y);
+                }
+            }
+
+
+
+
+
             lastTime = currentTime;
         }
 
@@ -123,7 +163,13 @@ namespace TankGame
 
             rl.Raylib.DrawText(fps.ToString(), 10, 10, 30, rl.Color.RED);
 
+            foreach (SceneObject bullet in Bullets)
+            {
+                bullet.Draw();
+            }
+
             tankObject.Draw();
+            
 
             rl.Raylib.EndDrawing();
         }
@@ -134,4 +180,5 @@ namespace TankGame
         }
     }
 }
+
 
