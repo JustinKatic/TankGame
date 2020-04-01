@@ -13,7 +13,7 @@ namespace TankGame
             TankGame tankGame = new TankGame();
 
             SetTargetFPS(60);
-            InitWindow(1900, 1060, "Hello World");
+            InitWindow(1400, 900, "Hello World");
 
             tankGame.Init();
 

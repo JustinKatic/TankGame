@@ -25,8 +25,42 @@ namespace TankGame
         SpriteObject tankSprite = new SpriteObject();
         SpriteObject turretSprite = new SpriteObject();
 
-        private List<SpriteObject> Bullets = new List<SpriteObject>();
 
+
+
+        //Walls
+        private rl.Image leftWall;
+        private rl.Texture2D leftWallTexture;
+        private int leftWallPosX = 0;
+        private int leftWallPosY = 0;
+        public rl.Rectangle leftWallRec;
+        
+        private rl.Image rightWall;
+        private rl.Texture2D rightWallTexture;
+        private int rightWallPosX = 1350;
+        private int rightWallPosY = 0;
+        public rl.Rectangle rightWallRec;
+
+        private rl.Image topWall;
+        private rl.Texture2D topWallTexture;
+        private int topWallPosX = 0;
+        private int topWallPosY = 0;
+        public rl.Rectangle topWallRec;
+
+        private rl.Image bottomWall;
+        private rl.Texture2D bottomWallTexture;
+        private int bottomWallPosX = 0;
+        private int bottomWallPosY = 850;
+        public rl.Rectangle bottomWallRec;
+
+      
+
+
+        //bullet rec
+        private rl.Rectangle bulletRec;
+
+
+        private List<SpriteObject> BulletsList = new List<SpriteObject>();
 
 
         public void Init()
@@ -46,14 +80,50 @@ namespace TankGame
             turretSprite.SetPosition(0, turretSprite.Width / 2.0f);
 
 
-
-
             // set up the scene object hierarchy - parent the turret to the base,
             // then the base to the tank sceneObject
             turretObject.AddChild(turretSprite);
             tankObject.AddChild(tankSprite);
             tankObject.AddChild(turretObject);
 
+
+            leftWall = rl.Raylib.LoadImage("../../Images/dirtSideWall.png");
+            leftWallTexture = rl.Raylib.LoadTextureFromImage(leftWall);
+
+            rightWall = rl.Raylib.LoadImage("../../Images/dirtSideWall.png");
+            rightWallTexture = rl.Raylib.LoadTextureFromImage(rightWall);
+
+            topWall = rl.Raylib.LoadImage("../../Images/dirtTopBottomWall.png");
+            topWallTexture = rl.Raylib.LoadTextureFromImage(topWall);
+
+            bottomWall = rl.Raylib.LoadImage("../../Images/dirtTopBottomWall.png");
+            bottomWallTexture = rl.Raylib.LoadTextureFromImage(bottomWall);
+
+            //left wall collision rec box
+            leftWallRec.x = 0;
+            leftWallRec.y = 0;
+            leftWallRec.width = 50;
+            leftWallRec.height = 900;
+
+            //right wall collision rec box
+            rightWallRec.x = 1350;
+            rightWallRec.y = 0;
+            rightWallRec.width = 50;
+            rightWallRec.height = 900;
+
+            //top wall collision rec box
+            topWallRec.x = 50;
+            topWallRec.y = 0;
+            topWallRec.width = 1300;
+            topWallRec.height = 50;
+
+            //bottom wall collision rec box
+            bottomWallRec.x = 50;
+            bottomWallRec.y = 850;
+            bottomWallRec.width = 1300;
+            bottomWallRec.height = 50;
+
+          
 
 
             // having an empty object for the tank parent means we can set the
@@ -77,6 +147,7 @@ namespace TankGame
             }
             frames++;
 
+        
 
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_A))
             {
@@ -94,6 +165,7 @@ namespace TankGame
                tankObject.LocalTransform.m2, 1) * deltaTime * 300;
                 tankObject.Translate(facing.x, facing.y);
             }
+
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_S))
             {
                 Vector3 facing = new Vector3(
@@ -117,27 +189,18 @@ namespace TankGame
             {
                 {
                     SpriteObject bullet = new SpriteObject();
-                    Bullets.Add(bullet);
+                    BulletsList.Add(bullet);                   
                     bullet.Load("../../Images/bulletBlue.png");
-
                     bullet.localTransform = tankObject.GetChild(1).GlobalTransform.GetTransposed();
-
-
-                    Vector3 length = new Vector3(
-                        bullet.LocalTransform.m1,
-                        bullet.LocalTransform.m2, 1) * ((tankSprite.Width / 2f) - 5f);
-
-                    Vector3 height = new Vector3(
-                        bullet.LocalTransform.m4,
-                        bullet.LocalTransform.m5, 1) * -((tankSprite.Height / 6f) - 3f);
-
-                    bullet.Translate(length.x, length.y);
-                    bullet.Translate(height.x, height.y);
-
+                    bulletRec.x = bullet.localTransform.m7;
+                    bulletRec.y = bullet.localTransform.m8;
+                    bulletRec.width = 20;
+                    bulletRec.height = 10;
                 }
             }
 
-            foreach (SpriteObject bullet in Bullets)
+            if (BulletsList.Count > 0)
+            foreach (SpriteObject bullet in BulletsList)
             {
                 if (bullet != null)
                 {
@@ -145,12 +208,37 @@ namespace TankGame
                         bullet.LocalTransform.m1,
                         bullet.LocalTransform.m2, 1) * deltaTime * 700;
                     bullet.Translate(facing.x, facing.y);
+                    bulletRec.x = bullet.localTransform.m7;
+                    bulletRec.y = bullet.localTransform.m8;
+                    bulletRec.width = 20;
+                    bulletRec.height = 10;
+              
+
+                    rl.Raylib.DrawRectangle(Convert.ToInt32(bullet.localTransform.m7), Convert.ToInt32(bullet.localTransform.m8), 20, 10, rl.Color.WHITE);
                 }
             }
 
 
-
-
+            if (rl.Raylib.CheckCollisionRecs(bulletRec, leftWallRec))
+            {
+                Console.WriteLine("HIT LEFT");
+               // DeleteBullet(ref BulletsList, BulletsList.Count - 1);
+            }
+            if (rl.Raylib.CheckCollisionRecs(bulletRec, rightWallRec))
+            {
+                Console.WriteLine("HIT RIGHT");
+                DeleteBullet(ref BulletsList, BulletsList.Count -1);
+            }
+            if (rl.Raylib.CheckCollisionRecs(bulletRec, topWallRec))
+            {
+                Console.WriteLine("HIT TOP");
+                DeleteBullet(ref BulletsList, BulletsList.Count - 1);
+            }
+            if (rl.Raylib.CheckCollisionRecs(bulletRec, bottomWallRec))
+            {
+                Console.WriteLine("HIT BOTTOM");
+                DeleteBullet(ref BulletsList, BulletsList.Count - 1);
+            }
 
             lastTime = currentTime;
         }
@@ -163,13 +251,26 @@ namespace TankGame
 
             rl.Raylib.DrawText(fps.ToString(), 10, 10, 30, rl.Color.RED);
 
-            foreach (SceneObject bullet in Bullets)
+            if (BulletsList.Count > 0)
+            foreach (SceneObject bullet in BulletsList)
             {
                 bullet.Draw();
             }
 
             tankObject.Draw();
-            
+
+            rl.Raylib.DrawTexture(leftWallTexture, leftWallPosX, leftWallPosY, rl.Color.WHITE);
+            rl.Raylib.DrawTexture(rightWallTexture, rightWallPosX, rightWallPosY, rl.Color.WHITE);
+            rl.Raylib.DrawTexture(topWallTexture, topWallPosX, topWallPosY, rl.Color.WHITE);
+            rl.Raylib.DrawTexture(bottomWallTexture, bottomWallPosX, bottomWallPosY, rl.Color.WHITE);
+
+
+            //Collision box draw test area
+
+            //rl.Raylib.DrawRectangle(0, 0 ,50, 900, rl.Color.BLUE); //leftwall
+            //rl.Raylib.DrawRectangle(1350, 0, 50, 900, rl.Color.WHITE); // right wall
+            //rl.Raylib.DrawRectangle(50, 0, 1300, 50, rl.Color.GREEN); //topwall
+            //rl.Raylib.DrawRectangle(50, 850, 1300, 50, rl.Color.GOLD); //bottomwall
 
             rl.Raylib.EndDrawing();
         }
@@ -177,6 +278,13 @@ namespace TankGame
         public void Shutdown()
         {
 
+        }
+        public void DeleteBullet(ref List<SpriteObject> bullet, int index)
+        {            
+            rl.Raylib.UnloadImage(bullet[index].image);
+            bullet[index] = null;
+            bullet.RemoveAt(index);
+            Console.WriteLine("deleted bullet");
         }
     }
 }
