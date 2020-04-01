@@ -10,6 +10,7 @@ namespace TankGame
     {      
        public Texture2D texture = new Texture2D();
        public Image image = new Image();
+      
         public float Width
         {
             get { return texture.width; }
@@ -31,7 +32,7 @@ namespace TankGame
         //globalTransform.This way the image will show up positioned and orientated based on the matrix.
 
         public override void OnDraw()
-        {
+        {            
             float rotation = (float)Math.Atan2(
             globalTransform.m2, globalTransform.m1);
             Raylib.Raylib.DrawTextureEx(texture, new Vector2(globalTransform.m7, globalTransform.m8),
