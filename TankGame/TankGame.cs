@@ -49,18 +49,28 @@ namespace TankGame
         private int bottomWallPosY = 850;
         public rl.Rectangle bottomWallRec;
 
-
         //bullet rec
         private rl.Rectangle bulletRec;
 
         private List<SpriteObject> BulletsList = new List<SpriteObject>();
         private List<SpriteObject> ExplosionList = new List<SpriteObject>();
 
-
         public void Init()
         {
             stopwatch.Start();
             lastTime = stopwatch.ElapsedMilliseconds;
+
+            Colour colour = new Colour();
+            colour.GetRed();
+            Console.WriteLine("get red colour = " + colour.GetRed());
+            colour.GetGreen();
+            Console.WriteLine("get green colour =" + colour.GetGreen());
+            colour.SetRed(94);
+            colour.GetRed();
+            Console.WriteLine("get red colour = " + colour.GetRed());
+            colour.ChangeColour();
+            Console.WriteLine("get red colour = " + colour.GetRed());
+            Console.WriteLine("get green colour = " + colour.GetGreen());
 
             tankSprite.Load("../../Images/tankBlue_outline.png");
             tankObject.SetPosition(rl.Raylib.GetScreenWidth() / 2.0f, rl.Raylib.GetScreenHeight() / 2.0f);
@@ -73,14 +83,12 @@ namespace TankGame
             // sets an offset for the base, so it rotates around the centre
             turretSprite.SetPosition(0, turretSprite.Width / 2.0f);
 
-
             // set up the scene object hierarchy - parent the turret to the base,
             // then the base to the tank sceneObject
             turretObject.AddChild(turretSprite);
             tankObject.AddChild(tankSprite);
             tankObject.AddChild(turretObject);
             
-
 
             leftWall = rl.Raylib.LoadImage("../../Images/dirtSideWall.png");
             leftWallTexture = rl.Raylib.LoadTextureFromImage(leftWall);
@@ -257,7 +265,6 @@ namespace TankGame
 
         public void Draw()
         {
-
             rl.Raylib.BeginDrawing();
             rl.Raylib.ClearBackground(rl.Color.BLACK);
 

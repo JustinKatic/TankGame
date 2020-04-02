@@ -550,5 +550,17 @@ namespace UnitTestProject
 
             Assert.AreEqual<UInt32>(c.colour, 0x00000078);
         }
+
+        [TestMethod]
+        public void ColourSetRedToGreen()
+        {
+            Colour c_red = new Colour();
+            Colour c_green = new Colour();
+            c_red.SetRed(0x12);
+
+            c_green.SetGreen(c_red.GetRed());
+
+            Assert.AreEqual<UInt32>(c_green.colour, 0x00120000);
+        }
     }
 }

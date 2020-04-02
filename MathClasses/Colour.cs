@@ -59,5 +59,15 @@ namespace MathClasses
             colour = colour & 0xffffff00;
             colour |= (UInt32)alpha << 0;
         }
+
+        public void ChangeColour()
+        {           
+            SetGreen(GetRed());
+            SetRed(0);
+            
+
+            //colour = colour & 0x00ffffff; 
+            //colour |= (UInt32)red << 24;
+        }
     }
 }

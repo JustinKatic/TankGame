@@ -16,7 +16,7 @@ namespace TankGame
             //creates a screen 1400 width 900 height
             InitWindow(1400, 900, "Tank World");
 
-            //calls init(function)
+            //calls init(function)2
             tankGame.Init();
 
             //calls update and draw after init and keeps looping through them
