@@ -49,10 +49,14 @@ namespace MathClasses
         }
 
         //Vector 3 Dot
+        // the Dot Product is used to project a Vector onto another Vector,
+        //with the result being a Scalar value.
         public float Dot(Vector3 rhs)
         {
             return x * rhs.x + y * rhs.y + z * rhs.z;
         }
+
+        //cross product
 
         public Vector3 Cross(Vector3 rhs)
         {
@@ -63,6 +67,7 @@ namespace MathClasses
         }
 
         //vector 3 Magnitude
+        // common use for magnitude is to check the distance between two Points.
         public float Magnitude()
         {
             return (float)Math.Sqrt(x * x + y * y + z * z);

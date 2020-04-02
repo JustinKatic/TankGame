@@ -14,8 +14,7 @@ namespace TankGame
         private long currentTime = 0;
         private long lastTime = 0;
         private float bulletShootTimer = 2;
-        private float explosionDeletetimer = 0;
-        private int fps = 1;        
+        private float explosionDeletetimer = 0;     
         private float deltaTime = 0.005f;
 
         SceneObject tankObject = new SceneObject();
@@ -23,8 +22,6 @@ namespace TankGame
 
         SpriteObject tankSprite = new SpriteObject();
         SpriteObject turretSprite = new SpriteObject();
-
-
 
 
         //Walls
@@ -53,11 +50,8 @@ namespace TankGame
         public rl.Rectangle bottomWallRec;
 
 
-
-
         //bullet rec
         private rl.Rectangle bulletRec;
-
 
         private List<SpriteObject> BulletsList = new List<SpriteObject>();
         private List<SpriteObject> ExplosionList = new List<SpriteObject>();
@@ -85,6 +79,7 @@ namespace TankGame
             turretObject.AddChild(turretSprite);
             tankObject.AddChild(tankSprite);
             tankObject.AddChild(turretObject);
+            
 
 
             leftWall = rl.Raylib.LoadImage("../../Images/dirtSideWall.png");
@@ -123,14 +118,10 @@ namespace TankGame
             bottomWallRec.width = 1300;
             bottomWallRec.height = 50;
 
-
-
-
             // having an empty object for the tank parent means we can set the
             // position/rotation of the tank without
             // affecting the offset of the base sprite
             tankObject.SetPosition(rl.Raylib.GetScreenWidth() / 2.0f, rl.Raylib.GetScreenHeight() / 2.0f);
-
         }
 
         public void Update()
@@ -140,18 +131,19 @@ namespace TankGame
             deltaTime = (currentTime - lastTime) / 1000.0f;
             explosionDeletetimer += deltaTime;
             bulletShootTimer += deltaTime;
-
           
 
+            //rotate player left on A pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_A))
             {
                 tankObject.Rotate(-deltaTime * 5);
             }
+            //rotate player right on D pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_D))
             {
                 tankObject.Rotate(deltaTime * 5);
             }
-
+            //move player forward on W pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_W))
             {
                 Vector3 facing = new Vector3(
@@ -159,7 +151,7 @@ namespace TankGame
                tankObject.LocalTransform.m2, 1) * deltaTime * 300;
                 tankObject.Translate(facing.x, facing.y);
             }
-
+            //move player backwards on S pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_S))
             {
                 Vector3 facing = new Vector3(
@@ -167,31 +159,40 @@ namespace TankGame
                tankObject.LocalTransform.m2, 1) * deltaTime * -300;
                 tankObject.Translate(facing.x, facing.y);
             }
-
+            //rotate turret top left on Q pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_Q))
             {
                 turretObject.Rotate(-deltaTime * 2);
             }
+            //rotate turret top right on E pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_E))
             {
                 turretObject.Rotate(deltaTime * 2);
             }
-
+            //updates tank in delta time
             tankObject.Update(deltaTime);
 
+
+            //shoots bullet when SPACE pressed and timer is >= 1.5 seconds
             if (rl.Raylib.IsKeyPressed(rl.KeyboardKey.KEY_SPACE) && bulletShootTimer >=1.5)
             {
                 {
-                    explosionDeletetimer = 0;
+                    //creates a new bullet object
                     SpriteObject bullet = new SpriteObject();
+                    //adds bullet in bullet list
                     BulletsList.Add(bullet);
                     bullet.Load("../../Images/bulletBlue.png");
                     bullet.localTransform = tankObject.GetChild(1).GlobalTransform.GetTransposed();
-
+                    //creates a new explosion object 
                     SpriteObject explosion = new SpriteObject();
+                    //adds explosion in explosion list
                     ExplosionList.Add(explosion);
                     explosion.Load("../../Images/smokeOrange.png");
+                    //sets explosion to be = turrets transposed (matrix)
                     explosion.localTransform = tankObject.GetChild(1).GlobalTransform.GetTransposed();
+                    //resets explosion timer back to 0
+                    explosionDeletetimer = 0;
+                    //resets shoot timer back to 0
                     bulletShootTimer = 0;
                 }
             }
@@ -201,17 +202,17 @@ namespace TankGame
                 {
                     if (explosion != null)
                     {
+                        //sets explosions pos
                         Vector3 facing = new Vector3(
                            explosion.LocalTransform.m1,
                            explosion.LocalTransform.m2, 1);
-                           explosion.Translate(facing.x, facing.y);
-                        
+                        explosion.Translate(facing.x, facing.y);
+
+                        //shrink explosion every frame
                         explosion.texture.height--;
-                        explosion.texture.width--;                        
-                    
+                         explosion.texture.width--;                                           
                     }
                 }
-
 
             if (BulletsList.Count > 0)
                 foreach (SpriteObject bullet in BulletsList)
@@ -232,30 +233,17 @@ namespace TankGame
                     }
                 }
 
+            //collision detection with bullet and walls          
             if (BulletsList.Count > 0)
             {
-                if (rl.Raylib.CheckCollisionRecs(bulletRec, leftWallRec))
+                if (rl.Raylib.CheckCollisionRecs(bulletRec, leftWallRec) || (rl.Raylib.CheckCollisionRecs(bulletRec, rightWallRec))|| (rl.Raylib.CheckCollisionRecs(bulletRec, topWallRec)) || (rl.Raylib.CheckCollisionRecs(bulletRec, bottomWallRec)))
                 {
-                    Console.WriteLine("HIT LEFT");
-                    DeleteBullet(ref BulletsList, BulletsList.Count - 1);
-                }
-                if (rl.Raylib.CheckCollisionRecs(bulletRec, rightWallRec))
-                {
-                    Console.WriteLine("HIT RIGHT");
-                    DeleteBullet(ref BulletsList, BulletsList.Count - 1);
-                }
-                if (rl.Raylib.CheckCollisionRecs(bulletRec, topWallRec))
-                {
-                    Console.WriteLine("HIT TOP");
-                    DeleteBullet(ref BulletsList, BulletsList.Count - 1);
-                }
-                if (rl.Raylib.CheckCollisionRecs(bulletRec, bottomWallRec))
-                {
-                    Console.WriteLine("HIT BOTTOM");
+                    Console.WriteLine("HIT WALL");
                     DeleteBullet(ref BulletsList, BulletsList.Count - 1);
                 }
             }
 
+            //deleting explosion if there is one after 1.2 seconds
             if (ExplosionList.Count > 0)
             {
                 if (explosionDeletetimer > 1.2)
@@ -273,14 +261,14 @@ namespace TankGame
             rl.Raylib.BeginDrawing();
             rl.Raylib.ClearBackground(rl.Color.BLACK);
 
-            rl.Raylib.DrawText(fps.ToString(), 10, 10, 30, rl.Color.RED);
-
+            //if bullet list is > 0 draw bullet
             if (BulletsList.Count > 0)
                 foreach (SceneObject bullet in BulletsList)
                 {
                     bullet.Draw();
                 }
 
+            //if explosion list is > 0 draw explosion
             if (ExplosionList.Count > 0)
                 foreach (SceneObject explosion in ExplosionList)
                 {
@@ -289,12 +277,13 @@ namespace TankGame
 
             tankObject.Draw();
 
+            //Drawing dirt wall objects
             rl.Raylib.DrawTexture(leftWallTexture, leftWallPosX, leftWallPosY, rl.Color.WHITE);
             rl.Raylib.DrawTexture(rightWallTexture, rightWallPosX, rightWallPosY, rl.Color.WHITE);
             rl.Raylib.DrawTexture(topWallTexture, topWallPosX, topWallPosY, rl.Color.WHITE);
             rl.Raylib.DrawTexture(bottomWallTexture, bottomWallPosX, bottomWallPosY, rl.Color.WHITE);
 
-
+            
             //Collision box draw test area
 
             //rl.Raylib.DrawRectangle(0, 0, 50, 900, rl.Color.BLUE); //leftwall
@@ -309,18 +298,27 @@ namespace TankGame
         {
 
         }
+
+        //delete bullet function
         public void DeleteBullet(ref List<SpriteObject> bullet, int index)
         {
+            //removes bullet image
             rl.Raylib.UnloadImage(bullet[index].image);
+            //sets bullet in list to = null
             bullet[index] = null;
+            //removes bullet from list
             bullet.RemoveAt(index);
             Console.WriteLine("deleted bullet");
         }
 
+        //delete explosion function
         public void DeleteExplosion(ref List<SpriteObject> explosion, int index)
         {
+            //removes explosion image
             rl.Raylib.UnloadImage(explosion[index].image);
+            //sets exposion in list to = null
             explosion[index] = null;
+            //removes bullet from list
             explosion.RemoveAt(index);
             Console.WriteLine("explosion bullet");
         }

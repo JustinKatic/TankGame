@@ -11,12 +11,15 @@ namespace TankGame
         static void Main(string[] args)
         {
             TankGame tankGame = new TankGame();
-
+            //sets fps to 60 fps
             SetTargetFPS(60);
-            InitWindow(1400, 900, "Hello World");
+            //creates a screen 1400 width 900 height
+            InitWindow(1400, 900, "Tank World");
 
+            //calls init(function)
             tankGame.Init();
 
+            //calls update and draw after init and keeps looping through them
             while (!WindowShouldClose())
             {
                 tankGame.Update();
