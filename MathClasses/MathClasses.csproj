@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AABB.cs" />
     <Compile Include="Colour.cs" />
     <Compile Include="Matrix3.cs" />
     <Compile Include="Matrix4.cs" />
