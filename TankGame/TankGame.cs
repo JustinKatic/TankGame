@@ -35,7 +35,7 @@ namespace TankGame
         MathClasses.AABB bottomWall = new MathClasses.AABB(new MathClasses.Vector3(0, 900, 0), new MathClasses.Vector3(1400, 900, 0));
 
 
-        MathClasses.AABB testbox = new MathClasses.AABB(new MathClasses.Vector3(750, 450, 0), new MathClasses.Vector3(1000, 600, 0));
+        MathClasses.AABB testbox = new MathClasses.AABB(new MathClasses.Vector3(700, 400, 0), new MathClasses.Vector3(1000, 700, 0));
 
         public void Init()
         {
@@ -62,7 +62,7 @@ namespace TankGame
             // having an empty object for the tank parent means we can set the
             // position/rotation of the tank without
             // affecting the offset of the base sprite
-            tankObject.SetPosition(rl.Raylib.GetScreenWidth() / 2.0f, rl.Raylib.GetScreenHeight() / 2.0f);
+            tankObject.SetPosition(rl.Raylib.GetScreenWidth() / 3.0f, rl.Raylib.GetScreenHeight() / 2.0f);
         }
 
         public void Update()
@@ -86,18 +86,12 @@ namespace TankGame
             //move player forward on W pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_W))
             {
-                Vector3 facing = new Vector3(
-               tankObject.LocalTransform.m1,
-               tankObject.LocalTransform.m2, 1) * deltaTime * 300;
-                tankObject.Translate(facing.x, facing.y);
+                MoveForward();
             }
             //move player backwards on S pressed
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_S))
             {
-                Vector3 facing = new Vector3(
-               tankObject.LocalTransform.m1,
-               tankObject.LocalTransform.m2, 1) * deltaTime * -300;
-                tankObject.Translate(facing.x, facing.y);
+                MoveBackwards();
             }
 
             //rotate turret top left on Q pressed
@@ -118,6 +112,7 @@ namespace TankGame
             {
                 Projectile newBullet = new Projectile(turretObject.globalTransform.m5, -turretObject.globalTransform.m4);
                 newBullet.SetPosition(turretObject.globalTransform.m7, turretObject.globalTransform.m8);
+                //adds bullet to list
                 bullets.Add(newBullet);
             }
 
@@ -125,15 +120,19 @@ namespace TankGame
             {
                 foreach (Projectile newBullet in bullets)
                 {
+                    //moves bullet forward in facing direction * speed
                     newBullet.OnUpdate(deltaTime);
 
-                    rl.Raylib.DrawRectangleLines(Convert.ToInt32(newBullet.globalTransform.m7-10), Convert.ToInt32(newBullet.globalTransform.m8)-10, 15, 15, rl.Color.GREEN);
+                    //debug drawing collider box updateing with bullets pos
+                    rl.Raylib.DrawRectangleLines(Convert.ToInt32(newBullet.globalTransform.m7 - 10), Convert.ToInt32(newBullet.globalTransform.m8) - 10, 15, 15, rl.Color.GREEN);
 
+                    //bullet collider box updating with bullets pos
                     bulletCollider.Resize(new MathClasses.Vector3(newBullet.globalTransform.m7 - 15, newBullet.globalTransform.m8 - 15, 0),
                                           new MathClasses.Vector3(newBullet.globalTransform.m7 + 15, newBullet.globalTransform.m8 + 15, 0));
 
+                    //if bullet enters testbox do somthing
                     if (bulletCollider.Overlaps(testbox))
-                    {                       
+                    {
                         Console.WriteLine("I AM WORKING!!!!");
                     }
 
@@ -150,53 +149,71 @@ namespace TankGame
             playerCollider.Resize(new MathClasses.Vector3(tankObject.globalTransform.m7 - (tankSprite.Width / 2), tankObject.globalTransform.m8 - (tankSprite.Height / 2), 0),
                                   new MathClasses.Vector3(tankObject.globalTransform.m7 + (tankSprite.Width / 2), tankObject.globalTransform.m8 + (tankSprite.Height / 2), 0));
 
-            
 
-            //check collision between players collider box and wall box
-            if (playerCollider.Overlaps(leftWall))
-            {
-                Console.WriteLine("tank hit wall left wall");
-                tankObject.SetPosition(40, tankObject.globalTransform.m8);                               
-            }
-            if (playerCollider.Overlaps(topWall)) 
-            {
-                Console.WriteLine("tank hit top wall wall");
-                tankObject.SetPosition(tankObject.globalTransform.m7,40);
-            }
-            if (playerCollider.Overlaps(rightWall))
-            {
-                Console.WriteLine("tank hit right wall wall wall");
-                tankObject.SetPosition(rl.Raylib.GetScreenWidth()-40, tankObject.globalTransform.m8);
-            }
-            if (playerCollider.Overlaps(bottomWall))
-            {
-                Console.WriteLine("tank hit bottom wall wall");
-                tankObject.SetPosition(tankObject.globalTransform.m7, rl.Raylib.GetScreenHeight() - 40);
-            }
+            //check collision between players collider boxes
+            PlayerCollision(leftWall);
+            PlayerCollision(rightWall);
+            PlayerCollision(topWall);
+            PlayerCollision(bottomWall);
+            PlayerCollision(testbox);
+
 
             lastTime = currentTime;
+        }
+
+
+
+        //player collisions with aabb boxes
+        public void PlayerCollision(AABB collisionBox)
+        {
+            if (playerCollider.Overlaps(collisionBox) && (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_W)))
+            {
+                MoveBackwards();
+            }
+            else if (playerCollider.Overlaps(collisionBox) && (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_S)))
+            {
+                MoveForward();
+            }
+        }
+
+        //move thank forward
+        public void MoveForward()
+        {
+            Vector3 facing = new Vector3(
+            tankObject.LocalTransform.m1,
+            tankObject.LocalTransform.m2, 1) * deltaTime * 300;
+            tankObject.Translate(facing.x, facing.y);
+        }
+        //move tank backwards
+        public void MoveBackwards()
+        {
+            Vector3 facing = new Vector3(
+            tankObject.LocalTransform.m1,
+            tankObject.LocalTransform.m2, 1) * deltaTime * -300;
+            tankObject.Translate(facing.x, facing.y);
         }
 
         public void Draw()
         {
             rl.Raylib.BeginDrawing();
+
+            //sets background to black
             rl.Raylib.ClearBackground(rl.Color.BLACK);
 
-            //if bullet list is > 0 draw bullet
-
+            //if bullet list is >= 1 draw bullet
             if (bullets.Count >= 1)
                 foreach (SceneObject newBullet in bullets)
                 {
                     newBullet.Draw();
                 }
-
+            //draw tank
             tankObject.Draw();
 
 
             //debug drawing players collision box
-            rl.Raylib.DrawRectangleLines(Convert.ToInt32(tankObject.globalTransform.m7 - tankSprite.Width / 2), Convert.ToInt32(tankObject.globalTransform.m8 - tankSprite.Height / 2), 90, 90, rl.Color.RED);
-
-            rl.Raylib.DrawRectangleLines(700,450,300,150,rl.Color.RED);
+            rl.Raylib.DrawRectangleLines(Convert.ToInt32(tankObject.globalTransform.m7 - tankSprite.Width / 2), Convert.ToInt32(tankObject.globalTransform.m8 - tankSprite.Height / 2), 83, 78, rl.Color.RED);
+            //debug drawing test box
+            rl.Raylib.DrawRectangleLines(700, 400, 300, 300, rl.Color.RED);
 
             rl.Raylib.EndDrawing();
         }

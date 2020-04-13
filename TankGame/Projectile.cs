@@ -15,9 +15,7 @@ namespace TankGame
         public Projectile(float xDirection, float yDirection)
         {
             direction.x = xDirection;
-            direction.y = yDirection;
-
-            
+            direction.y = yDirection;         
         }
 
 
