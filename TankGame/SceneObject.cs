@@ -138,17 +138,18 @@ namespace TankGame
         }
 
         //sets rotation to absolute Z position
-        public void SetRotate(float radians)
+        public void SetRotateZ(float radians)
         {
             localTransform.SetRotateZ(radians);
             UpdateTransform();
         }
         //Rotates around current Z axis
-        public void Rotate(float radians)
+        public void RotateZ(float radians)
         {
             localTransform.RotateZ(radians);
             UpdateTransform();
         }
+
 
         //sets scale of object
         public void SetScale(float width, float height)
