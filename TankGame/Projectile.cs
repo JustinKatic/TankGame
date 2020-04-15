@@ -9,8 +9,7 @@ namespace TankGame
     {
         float speed = 700;
         MathClasses.Vector3 direction = new MathClasses.Vector3(0, 0, 0);
-
-        
+       
 
         public Projectile(float xDirection, float yDirection)
         {
