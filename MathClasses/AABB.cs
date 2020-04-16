@@ -8,15 +8,15 @@ namespace MathClasses
 {
     public class AABB
     {
+        Vector3 min = new Vector3(
+            float.NegativeInfinity,
+            float.NegativeInfinity,
+            float.NegativeInfinity);
 
-
-        Vector3 min = new Vector3(float.NegativeInfinity,
-       float.NegativeInfinity,
-       float.NegativeInfinity);
-
-        Vector3 max = new Vector3(float.PositiveInfinity,
-       float.PositiveInfinity,
-       float.PositiveInfinity);
+        Vector3 max = new Vector3(
+            float.PositiveInfinity,
+            float.PositiveInfinity,
+            float.PositiveInfinity);
 
         public AABB(Vector3 min, Vector3 max)
         {
@@ -77,6 +77,18 @@ namespace MathClasses
             // test for not overlapped as it exits faster
             return !(max.x < other.min.x || max.y < other.min.y ||
             min.x > other.max.x || min.y > other.max.y);
+        }
+
+        public bool Overlaps(Vector3 p)
+        {
+            // test for not overlapped as it exits faster
+            return !(p.x < min.x || p.y < min.y ||
+            p.x > max.x || p.y > max.y);
+        }
+
+        public Vector3 ClosestPoint(Vector3 p)
+        {
+            return Vector3.Clamp(p, min, max);
         }
     }
 }
