@@ -109,7 +109,6 @@ namespace MathClasses
             (rhs.x * lhs.m3) + (rhs.y * lhs.m6) + (rhs.z * lhs.m9));
         }
 
-
         //sets translate
         public void SetTranslation(float x, float y)
         {
@@ -148,15 +147,6 @@ namespace MathClasses
         {
             Matrix3 m = new Matrix3();
             m.SetScaled(x, y, z);
-            Set(this * m);
-        }
-
-        //increases the scale of transform in the X & Y axis using vectors
-        //and Z would be 0 working in 2d space
-        public void Scale(Vector3 v)
-        {
-            Matrix3 m = new Matrix3();
-            m.SetScaled(v.x, v.y, v.z);
             Set(this * m);
         }
     }

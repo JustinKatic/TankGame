@@ -11,10 +11,12 @@ namespace TankGame
        public Texture2D texture = new Texture2D();
        public Image image = new Image();
       
+        //gets width of texture
         public float Width
         {
             get { return texture.width; }
         }
+        //gets height of texture
         public float Height
         {
             get { return texture.height; }
@@ -30,7 +32,6 @@ namespace TankGame
         //override the OnDraw() method from the base class and in it we use the RayLib drawing
         //functions to draw a textured sprite using the texture member variable as well as the
         //globalTransform.This way the image will show up positioned and orientated based on the matrix.
-
         public override void OnDraw()
         {            
             float rotation = (float)Math.Atan2(

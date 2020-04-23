@@ -23,7 +23,6 @@ namespace MathClasses
             z = _z;
         }
 
-
         // vector 3 addition
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
         {

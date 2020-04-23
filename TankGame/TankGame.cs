@@ -16,7 +16,6 @@ namespace TankGame
         private float player2ShootTimer = 0;
         private float shootCoolDown = 0.2f;
 
-
         private float deltaTime = 0.005f;
 
         //player texts variables
@@ -43,7 +42,7 @@ namespace TankGame
 
         SceneObject targetObject1 = new SceneObject();
         SpriteObject targetSprite1 = new SpriteObject();
-
+            
         SceneObject targetObject2 = new SceneObject();
         SpriteObject targetSprite2 = new SpriteObject();
 
@@ -56,26 +55,26 @@ namespace TankGame
         private List<Projectile> bulletsList2 = new List<Projectile>();
 
         //initiating bullet collider
-        MathClasses.AABB bulletCollider1 = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
-        MathClasses.AABB bulletCollider2 = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
+        AABB bulletCollider1 = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        AABB bulletCollider2 = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
         //initiating player collider
-        MathClasses.AABB player1Collider = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
-        MathClasses.AABB player2Collider = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
+        AABB player1Collider = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        AABB player2Collider = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
         //initiating wall colliders
-        MathClasses.AABB leftWall = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 900, 0));
-        MathClasses.AABB rightWall = new MathClasses.AABB(new MathClasses.Vector3(1400, 0, 0), new MathClasses.Vector3(1400, 900, 0));
-        MathClasses.AABB topWall = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(1400, 0, 0));
-        MathClasses.AABB bottomWall = new MathClasses.AABB(new MathClasses.Vector3(0, 900, 0), new MathClasses.Vector3(1400, 900, 0));
-        MathClasses.AABB middleWall = new MathClasses.AABB(new MathClasses.Vector3(700, 0, 0), new MathClasses.Vector3(750, 900, 0));
+        AABB leftWall = new AABB(new Vector3(0, 0, 0), new Vector3(0, 900, 0));
+        AABB rightWall = new AABB(new Vector3(1400, 0, 0), new Vector3(1400, 900, 0));
+        AABB topWall = new AABB(new Vector3(0, 0, 0), new Vector3(1400, 0, 0));
+        AABB bottomWall = new AABB(new Vector3(0, 900, 0), new Vector3(1400, 900, 0));
+        AABB middleWall = new AABB(new Vector3(700, 0, 0), new Vector3(750, 900, 0));
 
         //initiating blade box collider
-        MathClasses.AABB bladeBoxCollider = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
+        AABB bladeBoxCollider = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
         //initiating target1 collider
-        MathClasses.AABB targetCollider1 = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
-        MathClasses.AABB targetCollider2 = new MathClasses.AABB(new MathClasses.Vector3(0, 0, 0), new MathClasses.Vector3(0, 0, 0));
+        AABB targetCollider1 = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+        AABB targetCollider2 = new AABB(new Vector3(0, 0, 0), new Vector3(0, 0, 0));
 
 
         //init happening when game first opens
@@ -161,7 +160,7 @@ namespace TankGame
 
             if (rl.Raylib.IsKeyDown(rl.KeyboardKey.KEY_P))
             {
-
+                // empty to stop the game ok?
             }
             else
             {
@@ -323,8 +322,7 @@ namespace TankGame
                 rl.Raylib.DrawText("Objective", 600, 650, 40, rl.Color.GOLD);
                 rl.Raylib.DrawText("Earn 1 point by shooting opposing teams target", 200, 700, 40, rl.Color.GOLD);
                 rl.Raylib.DrawText("20 points for destroying opposing teams tank", 200, 750, 40, rl.Color.GOLD);
-
-                
+              
             }
 
             rl.Raylib.EndDrawing();
@@ -335,14 +333,14 @@ namespace TankGame
 
         }
 
-        //FUNCTIONS
+        //FUNCTIONS 
         //__________________________________________________________________________________________________________________________________________
 
         //reszing collider boxes around objects/sprites so collision box updates with the objects pos   
         public void ResizingCollider(AABB whichCollider, SceneObject whichObject, SpriteObject whichSprite)
         {
-            whichCollider.Resize(new MathClasses.Vector3(whichObject.globalTransform.m7 - (whichSprite.Width / 2), whichObject.globalTransform.m8 - (whichSprite.Height / 2), 0),
-                                  new MathClasses.Vector3(whichObject.globalTransform.m7 + (whichSprite.Width / 2), whichObject.globalTransform.m8 + (whichSprite.Height / 2), 0));
+            whichCollider.Resize(new Vector3(whichObject.globalTransform.m7 - (whichSprite.Width / 2), whichObject.globalTransform.m8 - (whichSprite.Height / 2), 0),
+                                  new Vector3(whichObject.globalTransform.m7 + (whichSprite.Width / 2), whichObject.globalTransform.m8 + (whichSprite.Height / 2), 0));
         }
 
         //interacting each bullet has with objects in the scene such as destroying them, damageing player hitting collision boxes etc
@@ -361,8 +359,8 @@ namespace TankGame
                         rl.Raylib.DrawRectangleLines(Convert.ToInt32(newBullet.globalTransform.m7 - 10), Convert.ToInt32(newBullet.globalTransform.m8) - 10, 15, 15, rl.Color.GREEN);
                     }
                     //bullet collider box updating with bullets pos
-                    whichBulletCollider.Resize(new MathClasses.Vector3(newBullet.globalTransform.m7 - 10, newBullet.globalTransform.m8 - 10, 0),
-                                          new MathClasses.Vector3(newBullet.globalTransform.m7 + 10, newBullet.globalTransform.m8 + 10, 0));
+                    whichBulletCollider.Resize(new Vector3(newBullet.globalTransform.m7 - 10, newBullet.globalTransform.m8 - 10, 0),
+                                          new Vector3(newBullet.globalTransform.m7 + 10, newBullet.globalTransform.m8 + 10, 0));
 
                     //if bullet enters testbox do somthing
                     if (whichBulletCollider.Overlaps(whichTargetcollider))

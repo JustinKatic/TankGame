@@ -1,0 +1,125 @@
+commit 0a4c465a8e02fa6b2c503f894b47146ac6c9f31e
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Thu Apr 16 19:15:26 2020 +1000
+
+    cleaned up code added commenting and added a pause/help menu finished up functionality with second tank and second target
+
+commit fd49dc27c85eb04cb59dc96f535141d4064adf2a
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Wed Apr 15 19:55:42 2020 +1000
+
+    added second tank into game
+
+commit 0679907f433dce9b3617ed522465f4251e476817
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Tue Apr 14 17:15:52 2020 +1000
+
+    added moving target and score for hitting target
+
+commit 2dc7f62e0ebc84a32d54e04171014d7027ac5287
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Mon Apr 13 20:06:09 2020 +1000
+
+    fixxed collision to work more smoothly with more thing other then just out of bounds now able to use on any aabb
+
+commit f9aab73ca27278f83ac3e8abe4b25d40f4a872f5
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Fri Apr 10 01:32:47 2020 +1000
+
+    reworked collision to use aabb removed explosions but added projectile class to manage bullets
+
+commit d19068eabfade2877b206eacdb0115654405935e
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Fri Apr 3 10:46:04 2020 +1100
+
+    added version control software version control doc
+
+commit 5f51a4749e4519b220ab5037ef2088b1aa17a2bd
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Thu Apr 2 13:25:15 2020 +1100
+
+    added commenting and fixed collision when bullet hits corners
+
+commit 97cd776172341ee502be420bd05bf5e17b49892b
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Wed Apr 1 15:59:35 2020 +1100
+
+    explosion animation working correctly
+
+commit 1510f292b04b28c35e2563ab37ba573a158337dc
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Wed Apr 1 14:10:51 2020 +1100
+
+    working on bullet collision
+
+commit a8106d40b5766a24eabab6aa60b91ad28d662484
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Mon Mar 30 18:06:27 2020 +1100
+
+    Shooting implemented and working
+
+commit c74e2f8340cebee96e516a78fb753979d7fcc159
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Fri Mar 27 17:24:18 2020 +1100
+
+    added hierarchies for tank game and completed movement of my tank completly
+
+commit 926f0009203c187c3445abb2a5dbc88caa5c8fc1
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Thu Mar 26 17:15:41 2020 +1100
+
+    raylib semi working required to have using static raylib and cant access math classes proper
+
+commit 8a10249fdd04b94a279c2046240f9d1fe4165ceb
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Thu Mar 26 16:21:49 2020 +1100
+
+    Libary complete starting to implement raylib to my files and getting raylib up and running
+
+commit 1b3b93eb1cc55df1be777b620957582427743e0d
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Wed Mar 25 17:49:47 2020 +1100
+
+    finished rotate x,y,z matrix 3 and 4 in libary aswell as matrix * vector and started working on colours
+
+commit 0fa8a4d9e3b6a3a0965e887101fee6139d5d660a
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Sun Mar 22 16:42:15 2020 +1100
+
+    fixed vector 3 and 4 cross product trying to work out matrix rotation
+
+commit 073f8ffd9df0e2cfbd0ba9c05cf1ec6510fa6ae8
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Sun Mar 22 12:37:49 2020 +1100
+
+    added multiplcation matrix 3 and matrix 4
+
+commit 24f92157f00d126973ed1c930843f71e6f4e4d85
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Sat Mar 21 23:00:38 2020 +1100
+
+    added vector 3 and 4 normalize
+
+commit f53f252c50a0ddf46816792d5069f8b1ae4ccfb9
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Sat Mar 21 17:20:36 2020 +1100
+
+    added vector 3 and 4  dot vector, cross vector and magnitude
+
+commit e675f1a16812ab0c554d6471e053e145c11f2436
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Fri Mar 20 16:45:41 2020 +1100
+
+    finished vector 3 and vector 4 addition subtraction and pre scale post scale functions
+
+commit 7e039663d1f63cfec004b698e4f9dcb289704f6d
+Author: Katic44 <justinkatic4@gmail.com>
+Date:   Fri Mar 20 14:29:51 2020 +1100
+
+    initial commit
+
+commit 60cbd6ba0ecb804a2703c45e9e1368f856b5d6aa
+Author: JustinKatic <60805792+JustinKatic@users.noreply.github.com>
+Date:   Fri Mar 20 14:16:39 2020 +1100
+
+    Initial commit
