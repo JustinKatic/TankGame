@@ -23,7 +23,7 @@ namespace TankGame
         public float player2Health = 100;
         public int player1Score = 0;
         public int player2Score = 0;
-
+         
         //adding new scene and sprite variables
         SceneObject tankObject1 = new SceneObject();
         SpriteObject tankSprite1 = new SpriteObject();
